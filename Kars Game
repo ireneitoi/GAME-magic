@@ -1,0 +1,766 @@
+int sukurin = 0;
+int Jugadortsx = 10;
+int Jugadortsy= 200;
+int Jugadorts1x= 800;
+int Jugadorts1y = 0;
+int xattaku =0;
+int yattaku=40;
+int xginse = 500;
+int yginse= 9;
+int dx = 0;
+int dy = 0;
+int IDpersonaje = 0;
+int IDpersonaje1 = -1;
+int IDpersonaje2 = -1;
+int bango=1;
+int shifuto=1;
+String Yoso[] = {"carbon", "agua"};
+Kar JEEP;
+Kar CHEYENNE;
+Kar DEPORT;
+Kar YELLOW;
+Kar MONJA;
+Kar GREEN;
+
+
+
+ 
+void setup()
+{size(1200,700);
+  background(0);
+  //frameRate(200);
+JEEP  = new Kar ("JEEP", 100, 13, 0, 0);
+CHEYENNE = new Kar("CHEYENNE", 100, 15, 0, 1);
+DEPORT = new Kar("DEPORT", 100, 20, 1, 2);
+YELLOW = new Kar("YELLOW", 100, 29, 0, 3);
+MONJA = new Kar("MONJA", 100, 15, 1, 4);
+GREEN = new Kar("GREEN",100, 22, 0, 5);
+
+}
+
+// 
+void draw()
+{
+  
+  if (sukurin ==0)
+  { 
+      if(key == 0)
+     {
+       textSize(100);
+       text("Kuruma Race", 250,350);
+       fill(#FF2CF9);
+    
+       textSize(40);
+       text("Press any key to S T A R", 350, 600);
+       fill(#D34B6D);
+       //sttarted();
+      }
+      else{
+       key =0;
+       sukurin=1;
+      }
+    }
+    
+    if(sukurin == 1)
+    {
+     background(#7C0E78); 
+     fill(#7EFAF1);
+     rect(dx,dy,150,300);
+     
+      textSize(30);
+      fill(#F52525);
+      text("a for left, d for right to select a Car \nEnter to continue \n", 230,350);
+      JEEP.Dra(0,0,0,0);
+      CHEYENNE.Dra(1,200,0,0);
+      DEPORT.Dra(2,200,-30,0);
+      YELLOW.Dra(3, 200, 20,0);
+      MONJA.Dra(4,200, -30,0);
+      GREEN.Dra(5,150, 20,0);
+      
+     if(IDpersonaje1 == -1)
+     { 
+       text("selection of Car 1", -500, 300);
+     }
+      
+      if(IDpersonaje2== -2){
+        text("Select Car 2", -500,650);
+        text("Use j or k to attac", -500, 550);
+      }
+      
+     }
+     
+     if(sukurin ==2){
+       
+       background(#7C0E78);
+       fill(#7EFAF1);
+       
+       JEEP.Draginse();
+       CHEYENNE.Draginse();
+       JEEP.Dra(IDpersonaje1,Jugadortsx,Jugadortsy,1);
+       CHEYENNE.Dra(IDpersonaje2, Jugadorts1x, Jugadorts1y,2);
+       
+       if(CHEYENNE.ginse>0 && JEEP.ginse>0){
+          if(key == 'z'){
+             if(shifuto ==1)JEEP.attakuone();
+             if(shifuto ==2)CHEYENNE.attakuone();
+        }
+       
+          if(key == 'x'){
+            if(shifuto == 1) JEEP.attakutwo();
+            if(shifuto ==2) CHEYENNE.attakutwo();
+        }
+          
+          
+       }
+       if (JEEP.ginse<=0){
+         textSize(34);
+         text("Game O V E R \nWin Player 2 \nTo star again press R", -250, -90);
+         fill(#0A0A0A);
+       }
+      
+       if(CHEYENNE.ginse<=0){
+         textSize(34);
+         text("Game O V E R\nWin Player 1\nTp star again press R", -250, -90);
+         fill(0);
+       }
+     }
+ }
+ 
+class Kar 
+{
+int kaitae;
+int yoso;
+int Pureya;
+int difens;
+int attaku;
+int ginse;
+String namae;
+
+ Kar( String namae_,int ginse_, int attaku_, int difens_, int kaitae_){
+  namae = namae_;
+  ginse = ginse_;
+  attaku = attaku_;
+  difens = difens_;
+ // yoso = yoso_;
+  kaitae = kaitae_;
+  
+  }
+  
+  void Dra(int kaitae_, int x, int y, int pureya){
+    Pureya=pureya;
+    translate(x,y);
+    switch(kaitae_)
+    {
+      case 0://JEEP
+    //azul 
+    fill(0, 0, 204);
+    rect(61, 30, 69, 5);
+    //laterales izq then derecha 
+    rect(59, 35, 14, 3);
+    rect(57, 38, 13, 3);
+    rect(55, 41, 12, 3);
+    rect(53, 44, 11, 3);
+    rect(51, 47, 10, 3);
+    rect(49, 50, 9, 3);
+    rect(47, 53, 8, 3);
+  
+    rect(118, 35, 14, 3);
+    rect(121, 38, 13, 3);
+    rect(124, 41, 12, 3);
+    rect(127, 44, 11, 3);
+    rect(130, 47, 10, 3);
+    rect(133, 50, 9, 3);
+    rect(136, 53, 8, 3);
+  
+  
+    //ventana
+    fill(153, 255, 255);
+    rect(73, 35, 45, 3);
+    rect(70, 38, 51, 3);
+    rect(67, 41, 57, 3);
+    rect(64, 44, 63, 3);
+    rect(61, 47, 69, 3);
+    rect(58, 50, 75, 3);
+    rect(55, 53, 81, 3);
+  
+    //luces naranjas (izq-dere) & rojas (izq-dere)
+    fill(255, 128, 0);
+    rect(45, 56, 8, 3);
+    rect(43, 59, 10, 3);
+    rect(42, 62, 10, 3);
+    rect(41, 65, 10, 3);
+  
+    rect(137, 56, 8, 3);
+    rect(137, 59, 10, 3);
+    rect(138, 62, 10, 3);
+    rect(139, 65, 10, 3);
+  
+    fill(255, 0, 0);
+    rect(41, 68, 8, 3);
+    rect(41, 71, 8, 3);
+    rect(41, 74, 8, 3);
+  
+    rect(141, 68, 8, 3);
+    rect(141, 71, 8, 3);
+    rect(141, 74, 8, 3);
+  
+    //azul puerta cajuela
+    fill(0, 0, 204);
+    rect(53, 56, 84, 3);
+    rect(52, 59, 86, 3);
+    rect(51, 62, 88, 3);
+    rect(50, 65, 90, 3);
+    rect(49, 68, 92, 3);
+    rect(49, 71, 92, 3);
+    rect(49, 74, 92, 3);
+    rect(41, 77, 108, 27);
+  
+    //puerta de cajuela
+    fill(0);
+    rect(64, 75, 20, 5);;
+    
+     //llantas
+    fill(32, 32, 32);
+    ellipse(50,115, 20, 30);
+    ellipse(139,115, 20, 30);
+    
+    //defensa
+    fill(0);
+    rect(41, 93, 20, 15);
+    rect(61, 95, 3, 13);
+    rect(64, 99, 3, 9);
+    rect(67, 103, 82, 5);
+  
+    rect(129, 93, 20, 15);
+    rect(126, 95, 3, 13);
+    rect(123, 99, 3, 9);
+  
+    //llanta de refracción
+    fill(162, 162, 162);
+    ellipse(115, 81, 35, 35);
+  
+    //placa
+    rect(87, 99, 16, 4);     
+      break;
+      
+      case 1://CHEYENNE
+        //marco de la ventana
+        fill(255);
+        rect(61,30,69,5);
+        //laterales izq then derecha
+        rect(59, 35, 14, 3);
+        rect(57, 38, 13, 3);
+        rect(55, 41, 12, 3);
+        rect(53, 44, 11, 3);
+        rect(51, 47, 10, 3);
+        rect(49, 50, 9, 3);
+        rect(47, 53, 8, 3);
+      
+        rect(118, 35, 14, 3);
+        rect(121, 38, 13, 3);
+        rect(124, 41, 12, 3);
+        rect(127, 44, 11, 3);
+        rect(130, 47, 10, 3);
+        rect(133, 50, 9, 3);
+        rect(136, 53, 8, 3);
+      
+      
+        //ventana
+        fill(153, 204, 255);
+        rect(73, 35, 45, 3);
+        rect(70, 38, 51, 3);
+        rect(67, 41, 57, 3);
+        rect(64, 44, 63, 3);
+        rect(61, 47, 69, 3);
+        rect(58, 50, 75, 3);
+        rect(55, 53, 81, 3);
+        
+        //asientos
+        fill(32,32,32);
+        rect(65,50,18,6);
+        rect(105,50,18,6);
+        
+        //picaporte
+        fill(0);
+        rect(25,56, 140,3);
+        fill(255);
+        rect(25,59,140,40);
+        
+        //espejos retrovisores
+        fill(#76CAEA);
+        stroke(0);
+        rect(40,48,7,8);
+        rect(145,48,7,8);
+        
+        //luces
+        fill(#EA2F28);
+        rect(25,61,8,36);
+        rect(157,61,8,36);
+        fill(#FF2E35);
+        ellipse(29,70,7,7);
+        ellipse(161,70,7,7);
+        fill(#FF6C36);
+        ellipse(29,80,7,7);
+        ellipse(161,80,7,7);
+        fill(#B4B3B2);
+        ellipse(29,90,7,7);
+        ellipse(161,90,7,7);
+        
+        //placa
+        fill(#D1D1D1);
+        stroke(0);
+        rect(85,90,16,7);
+        
+        //Llantas
+      
+        fill(#363433);
+        stroke(0);
+        ellipse(54,125,15,21);
+        ellipse(134,125,15,21);
+        ellipse(40,127,23,28);
+        ellipse(148,127,23,28);
+       
+        
+        //defensa
+        fill(0);
+        rect(23,100,140,15);  
+    break;
+    
+    case 2: //DEPORT
+            //Red
+      fill(255,0,0);
+      rect(70,40,50,4);
+      rect(68,44,54,4);
+      rect(66,48,58,4);
+      rect(64,52,62,4);
+      rect(62,56,66,4);
+      rect(60,60,70,4);
+      rect(58,64,74,4);
+      rect(56,68,78,4);
+      
+      //ventana
+      fill(153,255,255);
+      rect(71,44,48,4);
+      rect(69,48,52,4);
+      rect(67,52,56,4);
+      rect(65,56,60,4);
+      rect(63,60,64,4);
+      rect(61,64,68,4);
+      
+      //cajuela
+      fill(255,0,0);
+      rect(26,68,134,4);
+      rect(24,72,138,4);
+      rect(22,76,142,4);
+      rect(20,80,146,8);
+      
+      rect(22,88,142,4);
+      rect(24,92,138,4);
+      rect(26,96,134,4);
+      rect(28,100,130,4);
+      rect(30,104,126,4);
+      rect(32,108,122,4);
+      
+      rect(34,112,25,4);
+      rect(36,116,20,4);
+      rect(127,112,25,4);
+      rect(129,116,20,4);
+      
+      //luces
+      fill(204,0,0);
+      rect(30,76,28,3);
+      rect(30,79,30,3);
+      rect(128,76,28,3);
+      rect(126,79,30,3);
+      
+      fill(255,128,0);
+      rect(30,82,32,3);
+      rect(30,85,34,3);
+      rect(30,88,36,3);
+      rect(124,82,32,3);
+      rect(122,85,34,3);
+      rect(120,88,36,3);
+      
+      fill(204,0,0);
+      rect(30,91,38,3);
+      rect(30,94,40,3);
+      rect(118,91,38,3);
+      rect(116,94,40,3);
+      
+      //botoncajuela
+      fill(192,192,192);
+      rect(93,75,4,4);
+      
+      //Placa
+      fill(0);
+      rect(83,100,23,4);
+      
+      //retrovisorizq then derecha
+      fill(255,0,0);
+      rect(30,52,6,4);
+      rect(28,56,8,4);
+      rect(25,60,11,4);
+      rect(21,64,15,4);
+      
+      rect(151,52,6,4);
+      rect(151,56,8,4);
+      rect(151,60,11,4);
+      rect(151,64,15,4);
+      //espejo
+      fill(204,255,255);
+      rect(31,56,3,4);
+      rect(29,60,5,4);
+      rect(153,56,3,4);
+      rect(153,60,5,4);
+      
+      //Llantas 
+      fill(0);
+      rect(26,104,4,4);
+      rect(26,106,4,4);
+      rect(26,108,6,4);
+      rect(26,112,8,4);
+      rect(26,116,10,4);
+      rect(26,120,26,8);
+      
+      rect(156,104,4,4);
+      rect(156,106,4,4);
+      rect(154,108,6,4);
+      rect(152,112,8,4);
+      rect(149,116,11,4);
+      rect(133,120,27,8);
+    break;
+    
+    case 3:   //YELLOW
+    //ventana 
+  fill(#89E1E5);
+   rect(60,40,80,6);
+   rect(56,46,88,6);
+   rect(52,52,96,6);
+   rect(48,58,104,6);  
+   
+ //asiento
+   fill(0);
+   rect(64,55,20,6);
+   rect(114,55,20,6);
+   rect(64,61,70,3);
+   
+   //mirror
+   fill(#89E1E5);
+   stroke(0);
+   rect(30,60,10,7);
+   rect(158,60,10,7);
+   
+   //llantas
+   fill(0);
+   ellipse(42,100,25,35);
+   ellipse(155,100,25,35);
+  
+  
+ //yellow
+    fill(#FFF04B);
+    noStroke();
+    rect(38,63,124,6);
+    rect(34,69,131,6);
+    rect(30,75,138,6);
+    
+    rect(34,81,130,6);
+    rect(38,87,123,6);
+    rect(42,93,115,6);
+    rect(46,99,107,6);
+  
+  //placas
+   fill(#C9C8C3);
+   stroke(0);
+   rect(85,90,25,8);
+  
+  //luces
+  fill(#F72D05);
+  noStroke();
+  rect(38,73,10,3);
+  rect(38,76,13,3);
+  rect(40,79,13,3);
+  rect(43,82,12,3);
+  
+  rect(150,73,10,3);
+  rect(147,76,13,3);
+  rect(144,79,13,3);
+  rect(141,82,13,3);
+    break;
+    
+    case 4: //MONJA
+           //Blanch
+      fill(255);
+      rect(44,40,40,3);
+      rect(42,43,44,3);
+      rect(40,46,48,3);
+      rect(38,49,52,3);
+      rect(36,52,56,55);
+      
+      //ventana
+      fill(153,255,255);
+      rect(44,50,40,15);
+      
+      //Luces
+      fill(255,0,0);
+      rect(36,80,5,5);
+      rect(87,80,5,5);
+      fill(255,128,0);
+      rect(36,85,5,5);
+      rect(87,85,5,5);
+      
+      //Manubrio cajuela
+      fill(0);
+      rect(55,75,12,3);
+      fill(192,192,192);
+      ellipse(69,76,8,8);
+      fill(0);
+      ellipse(69,76,5,5);
+      
+      //placa
+      fill(255,255,153);
+      rect(58,95,12,5);
+      
+      //defensa
+      fill(0);
+      rect(36,100,8,15);
+      rect(84,100,8,15);
+      rect(44,107,40,8);
+      
+      //llantas
+      fill(64,64,64);
+      ellipse(43,121,10,15);
+      ellipse(84,121,10,15);
+      
+      //retrovisor
+      fill(255);
+      rect(30,63,6,5);
+      rect(92,63,6,5);
+      fill(153,255,255);
+      rect(33,64,3,4);
+      rect(92,64,3,4);
+    break;
+    
+    case 5: //GREEN
+       //llnatas
+      fill(0);
+      ellipse(38,110,18,25);
+      ellipse(142,110,18,25);
+      
+     //green techo 
+     fill(#26AA3D);
+     noStroke();
+     rect(60,20,60,6);
+     rect(56,26,68,6);
+     rect(52,32,76,6);
+     rect(48,38,84,6);
+     rect(44,44,92,6);
+     
+     rect(34,50,112,6);
+     rect(30,56,120,6);
+     rect(26,62,128,6);
+     
+     rect(22,68,136,18);
+     
+     rect(26,86,128,6);
+     rect(30,92,120,6);
+     rect(34,98,112,6);
+     
+      
+     
+     //ventana
+     fill(#8CE2EA);
+     rect(62,26,56,6);
+     rect(58,32,64,6);
+     rect(54,38,72,6);
+     rect(50,44,80,6);
+     
+     //retrovisor
+      fill(#8CE2EA);
+      stroke(#26AA3D);
+      rect(37,40,7,10);
+      rect(136,40,7,10);
+      
+      //luces
+      fill(#EA2D0C);
+      noStroke();
+      rect(26,69,15,15);
+      rect(138,69,15,15);
+      
+      fill(#FF892E);
+      rect(23,69,3,15);
+      rect(153,69,3,15);
+      
+      fill(#B7B2AE);
+      rect(23,84,18,3);
+      rect(138,84,18,3);
+      
+      //placa
+      fill(#B7B2AE);
+      stroke(0);
+      rect(77,93,25,10);
+    break;
+    }
+  }
+ 
+    void Draginse()
+    {
+      int hr=ginse;
+      if (Pureya==1)
+    {
+      fill(#211613);
+      ellipse(10,10,hr*10,40);
+     
+    }
+    if (Pureya ==2)
+    {
+    fill(#211613);
+    ellipse(xginse, yginse, hr*10, 40);
+    
+    }
+   }
+   
+   void attakuone(){
+    int y=(int)random(110);
+    int r=(int)random(100);
+   
+     int hit=15;
+     int hatta=(int)random(100);
+     if(hatta>=0 && hatta<=25) hit=(int)(1.3*hit);
+     
+     if(Pureya ==1){
+      fill(#A2F7F5);
+     ellipse(xattaku-600, 40, r,r);
+     xattaku = xattaku+5;
+     if (xattaku==800)
+      {
+       xginse = xginse+ hit*8;
+       CHEYENNE.ginse=CHEYENNE.ginse-hit;
+       xattaku=0;
+       shifuto=2;
+       key=0;
+      }
+    }
+    
+    if(Pureya==2)
+    {
+    fill(#A2F7F5);
+    ellipse(xattaku, 40,r,r);
+    xattaku=xattaku-5;
+    if(xattaku==-800)
+    {
+    key=0;
+    shifuto=1;
+    JEEP.ginse = JEEP.ginse-hit;
+    xattaku = 0;
+    }
+   }
+  }
+  
+  void attakutwo(){
+    int y=(int)random(10);
+    int e=(int)random(30);
+ 
+   int hit =9;
+   int hatta= 100;
+   if(hatta>=0 && hatta<=20) hit =(int)(1.3*hit);
+  
+
+  if(Pureya ==1)
+  {
+   fill(#0D1717);
+  ellipse(xattaku-800, 40+y, e+30, e);
+  xattaku=xattaku+ 5;
+  if(attaku==850)
+  {
+    key=0;
+    shifuto=2;
+    xginse=xginse + hit*3;
+    JEEP.ginse=JEEP.ginse -hit;
+    xattaku =0;
+    }
+  }
+  
+  if(Pureya == 2){  
+    fill(1);
+    ellipse(xattaku, 40-y,e+30,e);
+    xattaku=xattaku-5;
+    if(xattaku==-850)
+    {
+    key=0;
+    shifuto=1;
+    JEEP.ginse = JEEP.ginse-hit;
+    xattaku = 0;
+  
+    }
+   }
+  
+  }
+  
+}
+   
+ ///  
+   void keyPressed()
+ {
+   if(sukurin ==1)
+  {
+    if(IDpersonaje>=0 && IDpersonaje<=5)
+     {
+       if(key == 'd')
+     {
+       if(IDpersonaje == 5) return;
+       dx=dx+200;
+       IDpersonaje = IDpersonaje+1;
+       key=0;
+     }
+     if(key=='a')
+     {
+       if(IDpersonaje==0)return;
+       dx=dx-200;
+       IDpersonaje = IDpersonaje-1;
+       key=0;
+     }
+     if(IDpersonaje==-1)
+     { 
+       if(key=='\n')
+     {
+       IDpersonaje1=IDpersonaje;
+       IDpersonaje2 = -2;
+       IDpersonaje =0;
+       dx=0;
+       dy=0;
+       key=0;
+     }
+    }
+    if(IDpersonaje2==-2)
+     {   
+      if(key=='\n')
+      {
+        IDpersonaje2= IDpersonaje;
+        IDpersonaje=0;
+        dx=0;
+        dy=0;
+        key=0;
+        sukurin=2;
+      }
+     }
+    }
+  }
+  if(sukurin==2)
+  {
+    if(CHEYENNE.ginse<=0 || JEEP.ginse<=0)
+   {
+     if(key=='r')
+     {
+       sukurin=0;
+     }
+   }
+  }
+ }
+
+ 
+ 
+  
+ 
+    
+  
+ 
